@@ -1,5 +1,5 @@
-const CELL_SIZE = 20;
-const CANVAS_SIZE = 500;
+const CELL_SIZE = 25;
+const CANVAS_SIZE = 550;
 const REDRAW_INTERVAL = 50;
 const WIDTH = CANVAS_SIZE / CELL_SIZE;
 const HEIGHT = CANVAS_SIZE / CELL_SIZE;
@@ -47,6 +47,7 @@ function initSnake(color) {
 }
 
 let snake1 = initSnake("green");
+let obs = initSnake("red");
 // Soal no 4: make apples array
 let apples = [
   {
@@ -136,6 +137,8 @@ function draw() {
     for (let i = 1; i < snake1.body.length; i++) {
       drawCell(ctx, snake1.body[i].x, snake1.body[i].y, snake1.color, snakeImg);
     }
+    var wallImg = document.getElementById("wall");
+    drawCell(ctx, obs.head.x, obs.head.y, obs.color, wallImg);
 
     for (let i = 0; i < apples.length; i++) {
       let apple = apples[i];
@@ -253,7 +256,7 @@ function move(snake) {
   }
   moveBody(snake);
   // Soal no 6: Check collision dengan snake3
-  if (!checkCollision([snake1])) {
+  if (!checkCollision([snake1, obs])) {
     setTimeout(function () {
       move(snake);
     }, MOVE_INTERVAL);
