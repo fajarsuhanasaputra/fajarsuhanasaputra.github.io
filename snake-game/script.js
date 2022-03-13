@@ -1,5 +1,5 @@
-const CELL_SIZE = 20;
-const CANVAS_SIZE = 500;
+const CELL_SIZE = 25;
+const CANVAS_SIZE = 550;
 const REDRAW_INTERVAL = 50;
 const WIDTH = CANVAS_SIZE / CELL_SIZE;
 const HEIGHT = CANVAS_SIZE / CELL_SIZE;
@@ -46,7 +46,8 @@ function initSnake(color) {
   };
 }
 
-let snake1 = initSnake("green");
+let snake1 = initSnake("red");
+let obs = initSnake("red");
 // Soal no 4: make apples array
 let apples = [
   {
@@ -56,6 +57,10 @@ let apples = [
     position: initPosition(),
   },
 ];
+
+function drawObstacles(ctx, x, y, image) {
+  ctx.drawImage(image, x * CELL_SIZE, y * CELL_SIZE, 100, 25);
+}
 
 function levelUp() {
   switch (snake1.score) {
@@ -98,7 +103,7 @@ function drawLevelAndSpeed() {
   let levelCanvas = document.getElementById("level");
   let speedCanvas = document.getElementById("speed");
   levelCanvas.innerText = `Snake Game - Level ${snake1.level}`;
-  speedCanvas.innerText = `Speed ${MOVE_INTERVAL}.ms`;
+  speedCanvas.innerText = `Kecepatan ${MOVE_INTERVAL}.ms`;
 }
 
 function drawCell(ctx, x, y, color, image) {
@@ -136,6 +141,8 @@ function draw() {
     for (let i = 1; i < snake1.body.length; i++) {
       drawCell(ctx, snake1.body[i].x, snake1.body[i].y, snake1.color, snakeImg);
     }
+    var wallImg = document.getElementById("wall");
+    drawObstacles(ctx, obs.head.x, obs.head.y, wallImg);
 
     for (let i = 0; i < apples.length; i++) {
       let apple = apples[i];
@@ -253,7 +260,7 @@ function move(snake) {
   }
   moveBody(snake);
   // Soal no 6: Check collision dengan snake3
-  if (!checkCollision([snake1])) {
+  if (!checkCollision([snake1, obs])) {
     setTimeout(function () {
       move(snake);
     }, MOVE_INTERVAL);
