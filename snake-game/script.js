@@ -10,7 +10,7 @@ const DIRECTION = {
   DOWN: 3,
 };
 // Soal no 2: Pengaturan Speed (semakin kecil semakin cepat) ubah dari 150 ke 120
-const MOVE_INTERVAL = 180;
+let MOVE_INTERVAL = 150;
 const gulpSound = new Audio("assets/sound_effect/level1.mp3");
 const level2sound = new Audio("assets/sound_effect/level2.mp3");
 const level3sound = new Audio("assets/sound_effect/level3.mp3");
@@ -47,7 +47,20 @@ function initSnake(color) {
 }
 
 let snake1 = initSnake("red");
-let obs = initSnake("red");
+let obs1 = initSnake("red");
+let obs2 = initSnake("red");
+let obstacles = [
+  initSnake(null),
+  initSnake(null),
+  initSnake(null),
+  initSnake(null),
+  initSnake(null),
+  initSnake(null),
+  initSnake(null),
+  initSnake(null),
+];
+
+console.log(obstacles);
 // Soal no 4: make apples array
 let apples = [
   {
@@ -59,7 +72,8 @@ let apples = [
 ];
 
 function drawObstacles(ctx, x, y, image) {
-  ctx.drawImage(image, x * CELL_SIZE, y * CELL_SIZE, 100, 25);
+  const heightObstacle = 25;
+  ctx.drawImage(image, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, heightObstacle);
 }
 
 function levelUp() {
@@ -141,8 +155,13 @@ function draw() {
     for (let i = 1; i < snake1.body.length; i++) {
       drawCell(ctx, snake1.body[i].x, snake1.body[i].y, snake1.color, snakeImg);
     }
-    var wallImg = document.getElementById("wall");
-    drawObstacles(ctx, obs.head.x, obs.head.y, wallImg);
+    // drawObstacles(ctx, obs1.head.x, obs1.head.y, wallImg);
+    // drawObstacles(ctx, obs2.head.x, obs2.head.y, wallImg);
+
+    for (let i = 0; i < obstacles.length; i++) {
+      var wallImg = document.getElementById("wall");
+      drawObstacles(ctx, obstacles[i].head.x, obstacles[i].head.y, wallImg);
+    }
 
     for (let i = 0; i < apples.length; i++) {
       let apple = apples[i];
@@ -239,6 +258,7 @@ function checkCollision(snakes) {
 
     alert("Game over");
     snake1 = initSnake("purple");
+    MOVE_INTERVAL = 150;
   }
   return isCollide;
 }
@@ -260,9 +280,32 @@ function move(snake) {
   }
   moveBody(snake);
   // Soal no 6: Check collision dengan snake3
-  if (!checkCollision([snake1, obs])) {
+  const obs1 = obstacles[0];
+  const obs2 = obstacles[1];
+  const obs3 = obstacles[2];
+  const obs4 = obstacles[3];
+  const obs5 = obstacles[4];
+  const obs6 = obstacles[5];
+  const obs7 = obstacles[6];
+  const obs8 = obstacles[7];
+
+  if (
+    !checkCollision([snake1, obs1, obs2, obs3, obs4, obs5, obs6, obs7, obs8])
+  ) {
     setTimeout(function () {
       move(snake);
+      if (snake1.level === 2) {
+        MOVE_INTERVAL = 120;
+      }
+      if (snake1.level === 3) {
+        MOVE_INTERVAL = 100;
+      }
+      if (snake1.level === 4) {
+        MOVE_INTERVAL = 80;
+      }
+      if (snake1.level === 5) {
+        MOVE_INTERVAL = 60;
+      }
     }, MOVE_INTERVAL);
   } else {
     initGame();
