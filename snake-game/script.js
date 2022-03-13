@@ -9,8 +9,8 @@ const DIRECTION = {
   UP: 2,
   DOWN: 3,
 };
-// Soal no 2: Pengaturan Speed (semakin kecil semakin cepat) ubah dari 150 ke 120
-const MOVE_INTERVAL = 180;
+
+const MOVE_INTERVAL = 120;
 const gulpSound = new Audio("assets/sound_effect/level1.mp3");
 const level2sound = new Audio("assets/sound_effect/level2.mp3");
 const level3sound = new Audio("assets/sound_effect/level3.mp3");
@@ -48,7 +48,7 @@ function initSnake(color) {
 
 let snake1 = initSnake("green");
 let obs = initSnake("red");
-// Soal no 4: make apples array
+
 let apples = [
   {
     position: initPosition(),
@@ -143,7 +143,6 @@ function draw() {
     for (let i = 0; i < apples.length; i++) {
       let apple = apples[i];
 
-      // Soal no 3: DrawImage apple dan gunakan image id:
       var img = document.getElementById("apple");
       ctx.drawImage(
         img,
@@ -176,7 +175,6 @@ function teleport(snake) {
   }
 }
 
-// Soal no 4: Jadikan apples array
 function eat(snake, apples) {
   for (let i = 0; i < apples.length; i++) {
     let apple = apples[i];
