@@ -1,5 +1,7 @@
 <html>
-  <head> </head>
+  <head><title>Snake Game</title>
+    <link rel="shortcut icon" href="assets/image/icon.ico" />
+    <link rel="stylesheet" type="text/css" href="style.css" /></head>
   <script type="text/javascript" src="script.js"></script>
   <body onload="draw();">
     <style>
@@ -12,11 +14,11 @@
         align-items: center;
       }
     </style>
+
+    <!-- Soal no 3: Tambahkan resource gambar untuk ditampilkan di canvas -->
     <img
       id="apple"
       style="display: none;"
-      width="100px"
-      height="100px"
       src="assets/image/apel.png"
       alt="Apple"
     />
@@ -26,11 +28,18 @@
       src="assets/image/ular.png"
       alt="Snake"
     />
+    <img
+      id="wall"
+      style="display: none;"
+      src="assets/image/wall.png"
+      alt="Wall"
+    />
+    <!-- Soal no 1: Ubah nilai width dan height menjadi 600 pada element canvas:  -->
     <canvas
       id="snakeBoard"
-      width="450"
-      height="450"
-      style="background-color:  #07050c;"
+      width="550"
+      height="550"
+      style="background-color:  #d7cfe9;"
     ></canvas>
     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
       <h2 id="level">Snake Game - Level 1</h3>
@@ -39,9 +48,10 @@
         id="score1Board"
         width="80"
         height="80"
-        style="border: 1px solid #000000;"
+        style="border: 1px solid #f80101;"
       ></canvas>
       <p id="speed">Speed 120.ms</p>
     </div>
+    
   </body>
 </html>
