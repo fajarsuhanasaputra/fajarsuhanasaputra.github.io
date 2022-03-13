@@ -1,5 +1,5 @@
-const CELL_SIZE = 20;
-const CANVAS_SIZE = 500;
+const CELL_SIZE = 25;
+const CANVAS_SIZE = 550;
 const REDRAW_INTERVAL = 50;
 const WIDTH = CANVAS_SIZE / CELL_SIZE;
 const HEIGHT = CANVAS_SIZE / CELL_SIZE;
@@ -9,8 +9,8 @@ const DIRECTION = {
   UP: 2,
   DOWN: 3,
 };
-// Soal no 2: Pengaturan Speed (semakin kecil semakin cepat) ubah dari 150 ke 120
-const MOVE_INTERVAL = 180;
+
+const MOVE_INTERVAL = 120;
 const gulpSound = new Audio("assets/sound_effect/level1.mp3");
 const level2sound = new Audio("assets/sound_effect/level2.mp3");
 const level3sound = new Audio("assets/sound_effect/level3.mp3");
@@ -47,7 +47,8 @@ function initSnake(color) {
 }
 
 let snake1 = initSnake("green");
-// Soal no 4: make apples array
+let obs = initSnake("red");
+
 let apples = [
   {
     position: initPosition(),
@@ -136,11 +137,12 @@ function draw() {
     for (let i = 1; i < snake1.body.length; i++) {
       drawCell(ctx, snake1.body[i].x, snake1.body[i].y, snake1.color, snakeImg);
     }
+    var wallImg = document.getElementById("wall");
+    drawCell(ctx, obs.head.x, obs.head.y, obs.color, wallImg);
 
     for (let i = 0; i < apples.length; i++) {
       let apple = apples[i];
 
-      // Soal no 3: DrawImage apple dan gunakan image id:
       var img = document.getElementById("apple");
       ctx.drawImage(
         img,
@@ -173,7 +175,6 @@ function teleport(snake) {
   }
 }
 
-// Soal no 4: Jadikan apples array
 function eat(snake, apples) {
   for (let i = 0; i < apples.length; i++) {
     let apple = apples[i];
@@ -253,7 +254,7 @@ function move(snake) {
   }
   moveBody(snake);
   // Soal no 6: Check collision dengan snake3
-  if (!checkCollision([snake1])) {
+  if (!checkCollision([snake1, obs])) {
     setTimeout(function () {
       move(snake);
     }, MOVE_INTERVAL);
